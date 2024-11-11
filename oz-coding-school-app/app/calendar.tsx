@@ -9,7 +9,7 @@ export default function Calendar() {
         alignItems: "center",
       }}
     >
-      <Text>Calendar</Text>
+      <Text>Calendar-hello</Text>
     </View>
   );
 }
