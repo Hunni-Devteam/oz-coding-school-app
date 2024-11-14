@@ -1,42 +1,20 @@
-import React, { Component } from 'react';
+import React, { Component, useState } from 'react';
 import { Alert, StyleSheet, Text, View, TouchableOpacity, SafeAreaView, StatusBar } from 'react-native';
 import { Agenda, DateData, AgendaEntry, AgendaSchedule } from 'react-native-calendars';
 
-interface State {
-  items?: AgendaSchedule;
+const timeToString = (time: number) =>  {
+  const date = new Date(time);
+  return date.toISOString().split('T')[0];
 }
 
-export default class AgendaScreen extends Component<State> {
-  state: State = {
-    items: undefined
-  };
+export const CalendarPage = () => {
+  const [items, setItems] = useState<AgendaSchedule>({});
 
-  render() {
-    return (
-      // SafeAreaView ensures content is within the screen bounds on devices with notches
-      <SafeAreaView style={styles.container}>
-        <StatusBar barStyle="dark-content" /> {/* Adjust status bar color */}
-        <Agenda
-          items={this.state.items}
-          loadItemsForMonth={this.loadItems}
-          selected={'2024-11-13'} // Default selected date
-          renderItem={this.renderItem}
-          renderEmptyDate={this.renderEmptyDate}
-          rowHasChanged={this.rowHasChanged}
-          showClosingKnob={true}
-          style={styles.agenda} // Full width and height for the calendar
-        />
-      </SafeAreaView>
-    );
-  }
-
-  loadItems = (day: DateData) => {
-    const items = this.state.items || {};
-
+  const loadItems = (day: DateData) => {
     setTimeout(() => {
       for (let i = -15; i < 85; i++) {
         const time = day.timestamp + i * 24 * 60 * 60 * 1000;
-        const strTime = this.timeToString(time);
+        const strTime = timeToString(time);
 
         if (!items[strTime]) {
           items[strTime] = [];
@@ -56,20 +34,11 @@ export default class AgendaScreen extends Component<State> {
       Object.keys(items).forEach(key => {
         newItems[key] = items[key];
       });
-      this.setState({
-        items: newItems
-      });
+      setItems(newItems);
     }, 1000);
-  };
+  }
 
-  renderDay = (day) => {
-    if (day) {
-      return <Text style={styles.customDay}>{day.getDay()}</Text>;
-    }
-    return <View style={styles.dayItem} />;
-  };
-
-  renderItem = (reservation: AgendaEntry, isFirst: boolean) => {
+  const renderItem = (reservation: AgendaEntry, isFirst: boolean) => {
     const fontSize = isFirst ? 16 : 14;
     const color = isFirst ? 'black' : '#43515c';
 
@@ -81,24 +50,36 @@ export default class AgendaScreen extends Component<State> {
         <Text style={{ fontSize, color }}>{reservation.name}</Text>
       </TouchableOpacity>
     );
-  };
+  }
 
-  renderEmptyDate = () => {
+  const renderEmptyDate = () => {
     return (
       <View style={styles.emptyDate}>
         <Text>This is empty date!</Text>
       </View>
     );
-  };
-
-  rowHasChanged = (r1: AgendaEntry, r2: AgendaEntry) => {
-    return r1.name !== r2.name;
-  };
-
-  timeToString(time: number) {
-    const date = new Date(time);
-    return date.toISOString().split('T')[0];
   }
+
+  const rowHasChanged = (r1: AgendaEntry, r2: AgendaEntry) => {
+    return r1.name !== r2.name;
+  }
+  
+  return (
+      // SafeAreaView ensures content is within the screen bounds on devices with notches
+      <SafeAreaView style={styles.container}>
+        <StatusBar barStyle="dark-content" /> {/* Adjust status bar color */}
+        <Agenda
+          items={items}
+          loadItemsForMonth={loadItems}
+          selected={'2024-11-13'} // Default selected date
+          renderItem={renderItem}
+          renderEmptyDate={renderEmptyDate}
+          rowHasChanged={rowHasChanged}
+          showClosingKnob={true}
+          style={styles.agenda} // Full width and height for the calendar
+        />
+      </SafeAreaView>
+    );
 }
 
 const styles = StyleSheet.create({
@@ -131,3 +112,5 @@ const styles = StyleSheet.create({
     marginLeft: 34,
   },
 });
+
+export default CalendarPage

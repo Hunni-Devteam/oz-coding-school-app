@@ -37,7 +37,17 @@ export default function TabLayout() {
         options={{
           title: 'signIn',
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon name={focused ? 'code-slash' : 'code-slash-outline'} color={color} />
+            <TabBarIcon name={focused ? 'person-add' : 'person-add-outline'} color={color} />
+          ),
+        }}
+      />
+
+      <Tabs.Screen
+        name="calendar"
+        options={{
+          title: 'calendar',
+          tabBarIcon: ({ color, focused }) => (
+            <TabBarIcon name={focused ? 'calendar' : 'calendar-outline'} color={color} />
           ),
         }}
       />
