@@ -1,30 +1,24 @@
-import { Text, View, StyleSheet} from "react-native";
+import React, { Component } from "react";
+import { render } from "react-dom";
+import LoginForm from './LoginForm';
+import './style.css';
 
-export default function Index() {
-  return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-      }}
-    >
-      <Text>Hello World!</Text>
-      <Link href={"/calendar"} style={styles.link} />
-    </View>
-  );
+interface AppProps {}
+interface AppState {
+    name: string;
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: 20,
-    backgroundColor: '#25292e'
-  },
-  link: {
-    marginTop: 15,
-    paddingVertical: 15,
-  },
-})
+const App = () => {
+    const onSubmitUsername = (id, password) =>
+        alert(`you entered: ${id} and Password ${password}`);
+
+    return (
+        <>
+            <div>
+                <LoginForm onSubmit={onSubmitUsername} />
+            </div>
+        </>
+    )
+}
+
+export default App
