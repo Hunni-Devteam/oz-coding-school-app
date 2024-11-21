@@ -1,5 +1,11 @@
+<<<<<<< HEAD
 import React from "react";
 import { SafeAreaView, View, Text } from "react-native";
+=======
+import { Ionicons } from '@expo/vector-icons';
+import React from 'react';
+import { SafeAreaView, View, Text, StyleSheet } from 'react-native';
+>>>>>>> e19cd2bf1bbaaf7a5690b7ae763d55450ac193c1
 
 type User = {
   id: number;
@@ -21,9 +27,25 @@ const UserProfile = ({ user }: UserProfileProps) => {
     <View>
       <Text>프로필 정보</Text>
       <View>
-        <Text>이름: {user.name}</Text>
-        <Text>이메일: {user.email}</Text>
-        <Text>전화번호: {user.phone}</Text>
+        <Text>나의정보</Text>
+        <View style={[styles.profileList]}>
+          <View style={[styles.profileListItem]}>
+            <Ionicons name="person-outline" size={24} color="black" />
+            <Text>이름: {user.name}</Text>
+          </View>
+          <View style={[styles.profileListItem]}>
+            <Ionicons name="mail-outline" size={24} color="black" />
+            <Text>이메일: {user.email}</Text>
+          </View>
+          <View style={[styles.profileListItem]}>
+            <Ionicons name="call-outline" size={24} color="black" />
+            <Text>전화번호: {user.phone}</Text>
+          </View>
+          <View style={[styles.profileListItem]}>
+          <Ionicons name="log-out-outline" size={24} color="black" />
+            <Text>로그아웃</Text>
+          </View>
+        </View>
       </View>
     </View>
   );
@@ -46,3 +68,14 @@ export default function TabTwoScreen() {
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  profileList: {
+    gap: 8
+  },
+  profileListItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  }
+});
