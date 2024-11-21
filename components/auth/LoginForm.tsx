@@ -1,5 +1,6 @@
+import BaseStyles from '@/styles/base';
 import { useState, useEffect } from 'react';
-import { Button, Keyboard, Text, TextInput, TouchableWithoutFeedback, View, SafeAreaView } from 'react-native';
+import { Button, Keyboard, Text, TextInput, TouchableWithoutFeedback, View, SafeAreaView, Pressable, StyleSheet } from 'react-native';
 
 export const LoginForm = ({ onSubmit }: {
   onSubmit: (id: string, password: string) => void;
@@ -26,25 +27,39 @@ export const LoginForm = ({ onSubmit }: {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <SafeAreaView>
-      <View>
-        <Text>id:</Text>
-        <TextInput
-          onChange={(e) => setId(e.nativeEvent.text)}
-          value={id}
-        />
+      <View style={styles.root}>
+        <View style={styles.formControl}>
+          <Text>id</Text>
+          <TextInput
+          style={BaseStyles.textInput}
+            onChange={(e) => setId(e.nativeEvent.text)}
+            value={id}
+          />
+        </View>
+        <View style={styles.formControl}>
+          <Text>Password</Text>
+          <TextInput
+          style={BaseStyles.textInput}
+            secureTextEntry
+            onChange={(e) => setPassword(e.nativeEvent.text)}
+            value={password}
+          />
+        </View>
+        <Pressable style={BaseStyles.button} onPress={handleSubmit}>
+          <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold' }}>Login</Text>
+        </Pressable>
       </View>
-      <View>
-        <Text>Password:</Text>
-        <TextInput
-          secureTextEntry
-          onChange={(e) => setPassword(e.nativeEvent.text)}
-          value={password}
-        />
-      </View>
-      <Button title='submit' disabled={isDisabled} onPress={handleSubmit} />
     </SafeAreaView>
     </TouchableWithoutFeedback>
   );
 };
+
+const styles = StyleSheet.create({
+  root: {
+    paddingHorizontal: 32,
+    gap: 16,
+  },
+  formControl: { gap: 6 }
+}); 
 
 export default LoginForm;
