@@ -1,22 +1,32 @@
-import { useState, useEffect } from 'react';
-import { Button, Keyboard, Text, TextInput, TouchableWithoutFeedback, View, SafeAreaView } from 'react-native';
+import { useState, useEffect } from "react";
+import {
+  Button,
+  Keyboard,
+  Text,
+  TextInput,
+  TouchableWithoutFeedback,
+  View,
+  SafeAreaView,
+} from "react-native";
 
-export const LoginForm = ({ onSubmit }: {
+export const LoginForm = ({
+  onSubmit,
+}: {
   onSubmit: (id: string, password: string) => void;
 }) => {
-  const [id, setId] = useState('');
-  const [password, setPassword] = useState('');
+  const [id, setId] = useState("");
+  const [password, setPassword] = useState("");
   const [isDisabled, setIsDisabled] = useState(true);
 
   function handleSubmit() {
     onSubmit(id, password);
-    setId('');
-    setPassword('');
+    setId("");
+    setPassword("");
     setIsDisabled(true);
   }
 
   useEffect(() => {
-    if (password !== '' && id !== '') {
+    if (password !== "" && id !== "") {
       setIsDisabled(false);
     } else {
       setIsDisabled(true);
@@ -25,24 +35,21 @@ export const LoginForm = ({ onSubmit }: {
 
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-    <SafeAreaView>
-      <View>
-        <Text>id:</Text>
-        <TextInput
-          onChange={(e) => setId(e.nativeEvent.text)}
-          value={id}
-        />
-      </View>
-      <View>
-        <Text>Password:</Text>
-        <TextInput
-          secureTextEntry
-          onChange={(e) => setPassword(e.nativeEvent.text)}
-          value={password}
-        />
-      </View>
-      <Button title='submit' disabled={isDisabled} onPress={handleSubmit} />
-    </SafeAreaView>
+      <SafeAreaView>
+        <View>
+          <Text>id:</Text>
+          <TextInput onChange={(e) => setId(e.nativeEvent.text)} value={id} />
+        </View>
+        <View>
+          <Text>Password:</Text>
+          <TextInput
+            secureTextEntry
+            onChange={(e) => setPassword(e.nativeEvent.text)}
+            value={password}
+          />
+        </View>
+        <Button title="submit" disabled={isDisabled} onPress={handleSubmit} />
+      </SafeAreaView>
     </TouchableWithoutFeedback>
   );
 };
