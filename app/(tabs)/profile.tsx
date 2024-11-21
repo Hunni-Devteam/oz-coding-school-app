@@ -1,6 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
-import { SafeAreaView, View, Text } from 'react-native';
+import { SafeAreaView, View, Text, StyleSheet } from 'react-native';
 
 type User = {
   id: number;
@@ -23,38 +23,20 @@ const UserProfile = ({ user }: UserProfileProps) => {
       <Text>프로필 정보</Text>
       <View>
         <Text>나의정보</Text>
-        <View style={{
-          gap: 8
-        }}>
-          <View style={{
-            flexDirection: 'row',
-            gap: 8,
-            alignItems: 'center'
-          }}>
+        <View style={[styles.profileList]}>
+          <View style={[styles.profileListItem]}>
             <Ionicons name="person-outline" size={24} color="black" />
             <Text>이름: {user.name}</Text>
           </View>
-          <View style={{
-            flexDirection: 'row',
-            gap: 8,
-            alignItems: 'center'
-          }}>
+          <View style={[styles.profileListItem]}>
             <Ionicons name="mail-outline" size={24} color="black" />
             <Text>이메일: {user.email}</Text>
           </View>
-          <View style={{
-            flexDirection: 'row',
-            gap: 8,
-            alignItems: 'center'
-          }}>
+          <View style={[styles.profileListItem]}>
             <Ionicons name="call-outline" size={24} color="black" />
             <Text>전화번호: {user.phone}</Text>
           </View>
-          <View style={{
-            flexDirection: 'row',
-            gap: 8,
-            alignItems: 'center'
-          }}>
+          <View style={[styles.profileListItem]}>
           <Ionicons name="log-out-outline" size={24} color="black" />
             <Text>로그아웃</Text>
           </View>
@@ -81,3 +63,14 @@ export default function TabTwoScreen() {
     </SafeAreaView>
   );
 }
+
+const styles = StyleSheet.create({
+  profileList: {
+    gap: 8
+  },
+  profileListItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  }
+});
