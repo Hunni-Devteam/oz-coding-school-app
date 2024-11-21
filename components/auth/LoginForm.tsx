@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Button, Keyboard, Text, TextInput, TouchableWithoutFeedback, View, SafeAreaView, Pressable } from 'react-native';
+import { Button, Keyboard, Text, TextInput, TouchableWithoutFeedback, View, SafeAreaView, Pressable, StyleSheet } from 'react-native';
 
 export const LoginForm = ({ onSubmit }: {
   onSubmit: (id: string, password: string) => void;
@@ -33,13 +33,7 @@ export const LoginForm = ({ onSubmit }: {
         <View style={{ gap: 6 }}>
           <Text>id</Text>
           <TextInput
-          style={{
-            borderRadius: 4,
-            padding: 12,
-            paddingVertical: 16,
-            backgroundColor: '#999',
-            color: 'white'
-          }}
+          style={styles.styledInput}
             onChange={(e) => setId(e.nativeEvent.text)}
             value={id}
           />
@@ -47,24 +41,13 @@ export const LoginForm = ({ onSubmit }: {
         <View style={{ gap: 6 }}>
           <Text>Password</Text>
           <TextInput
-          style={{
-            borderRadius: 4,
-            padding: 12,
-            paddingVertical: 16,
-            backgroundColor: '#999',
-            color: 'white',
-          }}
+          style={styles.styledInput}
             secureTextEntry
             onChange={(e) => setPassword(e.nativeEvent.text)}
             value={password}
           />
         </View>
-        <Pressable style={{
-          backgroundColor: '#6466E5',
-          padding: 16,
-          alignItems: 'center',
-          borderRadius: 5,
-        }} onPress={handleSubmit}>
+        <Pressable style={styles.button} onPress={handleSubmit}>
           <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold' }}>Login</Text>
         </Pressable>
       </View>
@@ -72,5 +55,21 @@ export const LoginForm = ({ onSubmit }: {
     </TouchableWithoutFeedback>
   );
 };
+
+const styles = StyleSheet.create({
+  styledInput: {
+    borderRadius: 4,
+    padding: 12,
+    paddingVertical: 16,
+    backgroundColor: '#999',
+    color: 'white',
+  },
+  button: {
+    backgroundColor: '#6466E5',
+    padding: 16,
+    alignItems: 'center',
+    borderRadius: 5,
+  }
+}); 
 
 export default LoginForm;
