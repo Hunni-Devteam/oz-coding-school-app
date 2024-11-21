@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Button, Keyboard, Text, TextInput, TouchableWithoutFeedback, View, SafeAreaView } from 'react-native';
+import { Button, Keyboard, Text, TextInput, TouchableWithoutFeedback, View, SafeAreaView, Pressable } from 'react-native';
 
 export const LoginForm = ({ onSubmit }: {
   onSubmit: (id: string, password: string) => void;
@@ -26,22 +26,48 @@ export const LoginForm = ({ onSubmit }: {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <SafeAreaView>
-      <View>
-        <Text>id:</Text>
-        <TextInput
-          onChange={(e) => setId(e.nativeEvent.text)}
-          value={id}
-        />
+      <View style={{
+        paddingHorizontal: 32,
+        gap: 16,
+      }}>
+        <View style={{ gap: 6 }}>
+          <Text>id</Text>
+          <TextInput
+          style={{
+            borderRadius: 4,
+            padding: 12,
+            paddingVertical: 16,
+            backgroundColor: '#999',
+            color: 'white'
+          }}
+            onChange={(e) => setId(e.nativeEvent.text)}
+            value={id}
+          />
+        </View>
+        <View style={{ gap: 6 }}>
+          <Text>Password</Text>
+          <TextInput
+          style={{
+            borderRadius: 4,
+            padding: 12,
+            paddingVertical: 16,
+            backgroundColor: '#999',
+            color: 'white',
+          }}
+            secureTextEntry
+            onChange={(e) => setPassword(e.nativeEvent.text)}
+            value={password}
+          />
+        </View>
+        <Pressable style={{
+          backgroundColor: '#6466E5',
+          padding: 16,
+          alignItems: 'center',
+          borderRadius: 5,
+        }} onPress={handleSubmit}>
+          <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold' }}>Login</Text>
+        </Pressable>
       </View>
-      <View>
-        <Text>Password:</Text>
-        <TextInput
-          secureTextEntry
-          onChange={(e) => setPassword(e.nativeEvent.text)}
-          value={password}
-        />
-      </View>
-      <Button title='submit' disabled={isDisabled} onPress={handleSubmit} />
     </SafeAreaView>
     </TouchableWithoutFeedback>
   );

@@ -1,4 +1,4 @@
-import { Alert, View } from "react-native";
+import { Alert, Button, View } from "react-native";
 import LoginForm from '@/components/auth/LoginForm';
 
 interface AppProps {}
