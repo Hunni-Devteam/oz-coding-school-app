@@ -1,3 +1,4 @@
+import BaseStyles from '@/styles/base';
 import { useState, useEffect } from 'react';
 import { Button, Keyboard, Text, TextInput, TouchableWithoutFeedback, View, SafeAreaView, Pressable, StyleSheet } from 'react-native';
 
@@ -26,28 +27,25 @@ export const LoginForm = ({ onSubmit }: {
   return (
     <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
     <SafeAreaView>
-      <View style={{
-        paddingHorizontal: 32,
-        gap: 16,
-      }}>
-        <View style={{ gap: 6 }}>
+      <View style={styles.root}>
+        <View style={styles.formControl}>
           <Text>id</Text>
           <TextInput
-          style={styles.styledInput}
+          style={BaseStyles.textInput}
             onChange={(e) => setId(e.nativeEvent.text)}
             value={id}
           />
         </View>
-        <View style={{ gap: 6 }}>
+        <View style={styles.formControl}>
           <Text>Password</Text>
           <TextInput
-          style={styles.styledInput}
+          style={BaseStyles.textInput}
             secureTextEntry
             onChange={(e) => setPassword(e.nativeEvent.text)}
             value={password}
           />
         </View>
-        <Pressable style={styles.button} onPress={handleSubmit}>
+        <Pressable style={BaseStyles.button} onPress={handleSubmit}>
           <Text style={{ color: 'white', fontSize: 16, fontWeight: 'bold' }}>Login</Text>
         </Pressable>
       </View>
@@ -57,19 +55,11 @@ export const LoginForm = ({ onSubmit }: {
 };
 
 const styles = StyleSheet.create({
-  styledInput: {
-    borderRadius: 4,
-    padding: 12,
-    paddingVertical: 16,
-    backgroundColor: '#999',
-    color: 'white',
+  root: {
+    paddingHorizontal: 32,
+    gap: 16,
   },
-  button: {
-    backgroundColor: '#6466E5',
-    padding: 16,
-    alignItems: 'center',
-    borderRadius: 5,
-  }
+  formControl: { gap: 6 }
 }); 
 
 export default LoginForm;
