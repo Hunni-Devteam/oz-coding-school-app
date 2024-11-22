@@ -1,23 +1,24 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   StyleSheet,
   Text,
   View,
   SafeAreaView,
+  ScrollView,
   StatusBar,
   useColorScheme,
 } from "react-native";
 import { Calendar } from "react-native-calendars";
 
+const months = [
+  { title: "November 2024", date: "2024-11-01" },
+  { title: "December 2024", date: "2024-12-01" },
+  { title: "January 2025", date: "2025-01-01" },
+];
+
 export const CalendarPage = () => {
   const colorScheme = useColorScheme();
   const isDarkMode = colorScheme === "dark";
-
-  const markedDates = {
-    "2024-11-20": { selected: true, marked: true, dotColor: "#8E4AE3" },
-    "2024-11-22": { marked: true, dotColor: "#FF9800" },
-    "2024-11-25": { marked: true, dotColor: "#FF9800" },
-  };
 
   return (
     <SafeAreaView
@@ -28,7 +29,7 @@ export const CalendarPage = () => {
     >
       <StatusBar barStyle={isDarkMode ? "light-content" : "dark-content"} />
 
-      {/* Calendar Header */}
+      {/* Page Header */}
       <View style={styles.header}>
         <Text
           style={[styles.headerText, { color: isDarkMode ? "#fff" : "#000" }]}
@@ -37,29 +38,43 @@ export const CalendarPage = () => {
         </Text>
       </View>
 
-      {/* Calendar Component */}
-      <Calendar
-        markedDates={markedDates}
-        theme={{
-          backgroundColor: isDarkMode ? "#121212" : "#fff",
-          calendarBackground: isDarkMode ? "#121212" : "#fff",
-          textSectionTitleColor: isDarkMode ? "#bbb" : "#000",
-          dayTextColor: isDarkMode ? "#fff" : "#000",
-          todayTextColor: isDarkMode ? "#8E4AE3" : "#000",
-          selectedDayBackgroundColor: "#8E4AE3",
-          selectedDayTextColor: "#fff",
-          arrowColor: isDarkMode ? "#fff" : "#000",
-          monthTextColor: isDarkMode ? "#fff" : "#000",
-          dotColor: "#8E4AE3",
-          textDayFontWeight: "500",
-          textMonthFontWeight: "bold",
-          textDayHeaderFontWeight: "500",
-          textDayFontSize: 16,
-          textMonthFontSize: 18,
-          textDayHeaderFontSize: 14,
-        }}
-        style={styles.calendar}
-      />
+      {/* Scrollable View with Multiple Calendars */}
+      <ScrollView style={styles.scrollContainer}>
+        {months.map((month, index) => (
+          <View key={index} style={styles.calendarContainer}>
+            <Text
+              style={[
+                styles.monthTitle,
+                { color: isDarkMode ? "#fff" : "#000" },
+              ]}
+            >
+              {month.title}
+            </Text>
+            <Calendar
+              current={month.date}
+              theme={{
+                backgroundColor: isDarkMode ? "#121212" : "#fff",
+                calendarBackground: isDarkMode ? "#121212" : "#fff",
+                textSectionTitleColor: isDarkMode ? "#bbb" : "#000",
+                dayTextColor: isDarkMode ? "#fff" : "#000",
+                todayTextColor: isDarkMode ? "#8E4AE3" : "#000",
+                selectedDayBackgroundColor: "#8E4AE3",
+                selectedDayTextColor: "#fff",
+                arrowColor: isDarkMode ? "#fff" : "#000",
+                monthTextColor: isDarkMode ? "#fff" : "#000",
+                dotColor: "#8E4AE3",
+                textDayFontWeight: "500",
+                textMonthFontWeight: "bold",
+                textDayHeaderFontWeight: "500",
+                textDayFontSize: 16,
+                textMonthFontSize: 18,
+                textDayHeaderFontSize: 14,
+              }}
+              style={styles.calendar}
+            />
+          </View>
+        ))}
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -78,9 +93,21 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: "bold",
   },
-  calendar: {
+  scrollContainer: {
     flex: 1,
-    padding: 10,
+  },
+  calendarContainer: {
+    marginBottom: 20,
+    paddingHorizontal: 10,
+  },
+  monthTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginVertical: 10,
+  },
+  calendar: {
+    borderRadius: 10,
+    overflow: "hidden",
   },
 });
 
