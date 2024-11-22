@@ -1,6 +1,11 @@
+<<<<<<< HEAD
 import { Ionicons } from '@expo/vector-icons';
 import React from 'react';
 import { SafeAreaView, View, Text, StyleSheet } from 'react-native';
+=======
+import React from "react";
+import { SafeAreaView, View, Text } from "react-native";
+>>>>>>> 0b9e26d (🎨 Structure)
 
 type User = {
   id: number;
@@ -50,9 +55,9 @@ const UserProfile = ({ user }: UserProfileProps) => {
 export default function TabTwoScreen() {
   const exampleUser = {
     id: 1,
-    name: '강훈',
-    email: 'hunni.devteam@gmail.com',
-    phone: '010-1234-1234',
+    name: "강훈",
+    email: "hunni.devteam@gmail.com",
+    phone: "010-1234-1234",
     createdAt: new Date(),
     updateAt: new Date(),
   };
