@@ -57,11 +57,7 @@ export const LoginForm = ({
               value={password}
             />
           </View>
-          <Pressable style={BaseStyles.button} onPress={handleSubmit}>
-            <Text style={{ color: "white", fontSize: 16, fontWeight: "bold" }}>
-              Login
-            </Text>
-          </Pressable>
+          <Button title="Submit" onPress={handleSubmit} disabled={isDisabled} />
         </View>
       </SafeAreaView>
     </TouchableWithoutFeedback>
