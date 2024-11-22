@@ -1,7 +1,6 @@
 import { Tabs } from "expo-router";
 import React from "react";
-
-import { TabBarIcon } from "@/components/navigation/TabBarIcon";
+import { Ionicons } from "@expo/vector-icons"; // Replace with a matching icon library
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
 
@@ -12,54 +11,80 @@ export default function TabLayout() {
     <Tabs
       screenOptions={{
         tabBarActiveTintColor: Colors[colorScheme ?? "light"].tint,
-        headerShown: false,
+        tabBarInactiveTintColor: "#888", // Light gray for inactive icons
+        tabBarStyle: {
+          backgroundColor: colorScheme === "dark" ? "#121212" : "#fff",
+          borderTopWidth: 0, // Remove border for a cleaner look
+        },
+        tabBarShowLabel: false, // Only show icons, no labels
+        headerShown: false, // Hide the header
       }}
     >
+      {/* Calendar Tab */}
       <Tabs.Screen
         name="calendar"
         options={{
-          title: "calendar",
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon
+            <Ionicons
               name={focused ? "calendar" : "calendar-outline"}
               color={color}
+              size={24} // Adjust size to match the screenshot
             />
           ),
         }}
       />
 
+      {/* Friends Tab */}
+      <Tabs.Screen
+        name="friends"
+        options={{
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons
+              name={focused ? "people" : "people-outline"}
+              color={color}
+              size={24}
+            />
+          ),
+        }}
+      />
+
+      {/* Home Tab */}
       <Tabs.Screen
         name="index"
         options={{
-          title: "Home",
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon
+            <Ionicons
               name={focused ? "home" : "home-outline"}
               color={color}
+              size={24}
             />
           ),
         }}
       />
+
+      {/* Messages Tab */}
       <Tabs.Screen
-        name="signIn"
+        name="messages"
         options={{
-          title: "signIn",
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon
-              name={focused ? "person-add" : "person-add-outline"}
+            <Ionicons
+              name={focused ? "chatbubble" : "chatbubble-outline"}
               color={color}
+              size={24}
             />
           ),
         }}
       />
+
+      {/* Profile Tab */}
       <Tabs.Screen
         name="profile"
         options={{
-          title: "Profile",
           tabBarIcon: ({ color, focused }) => (
-            <TabBarIcon
-              name={focused ? "code-slash" : "code-slash-outline"}
+            <Ionicons
+              name={focused ? "person-circle" : "person-circle-outline"}
               color={color}
+              size={24}
             />
           ),
         }}
