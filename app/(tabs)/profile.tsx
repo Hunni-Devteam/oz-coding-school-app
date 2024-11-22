@@ -1,11 +1,6 @@
-<<<<<<< HEAD
-import { Ionicons } from '@expo/vector-icons';
-import React from 'react';
-import { SafeAreaView, View, Text, StyleSheet } from 'react-native';
-=======
+import { Ionicons } from "@expo/vector-icons";
 import React from "react";
-import { SafeAreaView, View, Text } from "react-native";
->>>>>>> 0b9e26d (🎨 Structure)
+import { SafeAreaView, View, Text, StyleSheet } from "react-native";
 
 type User = {
   id: number;
@@ -42,7 +37,7 @@ const UserProfile = ({ user }: UserProfileProps) => {
             <Text>전화번호: {user.phone}</Text>
           </View>
           <View style={[styles.profileListItem]}>
-          <Ionicons name="log-out-outline" size={24} color="black" />
+            <Ionicons name="log-out-outline" size={24} color="black" />
             <Text>로그아웃</Text>
           </View>
         </View>
@@ -71,11 +66,11 @@ export default function TabTwoScreen() {
 
 const styles = StyleSheet.create({
   profileList: {
-    gap: 8
+    gap: 8,
   },
   profileListItem: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     gap: 8,
-  }
+  },
 });
