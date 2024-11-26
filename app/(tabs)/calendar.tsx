@@ -9,6 +9,7 @@ import {
   useColorScheme,
 } from "react-native";
 import { Calendar } from "react-native-calendars";
+import { lightTheme, darkTheme } from "@/styles/base";
 
 const months = [
   { title: "November 2024", date: "2024-11-01" },
@@ -19,57 +20,29 @@ const months = [
 export const CalendarPage = () => {
   const colorScheme = useColorScheme();
   const isDarkMode = colorScheme === "dark";
+  const theme = isDarkMode ? darkTheme : lightTheme;
 
   return (
     <SafeAreaView
-      style={[
-        styles.container,
-        { backgroundColor: isDarkMode ? "#121212" : "#fff" },
-      ]}
+      style={[styles.container, { backgroundColor: theme.colors.background }]}
     >
       <StatusBar barStyle={isDarkMode ? "light-content" : "dark-content"} />
 
-      {/* Page Header */}
       <View style={styles.header}>
-        <Text
-          style={[styles.headerText, { color: isDarkMode ? "#fff" : "#000" }]}
-        >
+        <Text style={[styles.headerText, { color: theme.colors.text }]}>
           Calendar
         </Text>
       </View>
 
-      {/* Scrollable View with Multiple Calendars */}
       <ScrollView style={styles.scrollContainer}>
         {months.map((month, index) => (
           <View key={index} style={styles.calendarContainer}>
-            <Text
-              style={[
-                styles.monthTitle,
-                { color: isDarkMode ? "#fff" : "#000" },
-              ]}
-            >
+            <Text style={[styles.monthTitle, { color: theme.colors.text }]}>
               {month.title}
             </Text>
             <Calendar
               current={month.date}
-              theme={{
-                backgroundColor: isDarkMode ? "#121212" : "#fff",
-                calendarBackground: isDarkMode ? "#121212" : "#fff",
-                textSectionTitleColor: isDarkMode ? "#bbb" : "#000",
-                dayTextColor: isDarkMode ? "#fff" : "#000",
-                todayTextColor: isDarkMode ? "#8E4AE3" : "#000",
-                selectedDayBackgroundColor: "#8E4AE3",
-                selectedDayTextColor: "#fff",
-                arrowColor: isDarkMode ? "#fff" : "#000",
-                monthTextColor: isDarkMode ? "#fff" : "#000",
-                dotColor: "#8E4AE3",
-                textDayFontWeight: "500",
-                textMonthFontWeight: "bold",
-                textDayHeaderFontWeight: "500",
-                textDayFontSize: 16,
-                textMonthFontSize: 18,
-                textDayHeaderFontSize: 14,
-              }}
+              theme={theme.calendar}
               style={styles.calendar}
             />
           </View>
