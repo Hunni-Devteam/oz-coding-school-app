@@ -7,11 +7,13 @@ export const BaseStyles = {
       minHeight: Dimensions.get("window").height,
     },
     textInput: {
+      fontFamily: "SpaceMono",
       borderRadius: 4,
       padding: 12,
       paddingVertical: 16,
     },
     button: {
+      fontFamily: "SpaceMono",
       padding: 16,
       alignItems: "center",
       borderRadius: 5,
