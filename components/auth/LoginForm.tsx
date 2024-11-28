@@ -1,22 +1,36 @@
-import BaseStyles from "@/styles/base";
 import { useState, useEffect } from "react";
 import {
   Button,
   Keyboard,
-  Text,
   TextInput,
   TouchableWithoutFeedback,
-  View,
-  SafeAreaView,
-  Pressable,
   StyleSheet,
+  ScrollView,
+  Platform,
 } from "react-native";
+import { ThemedView } from "../ThemedView";
+import { ThemedText } from "../ThemedText";
+import { useThemeColor } from "@/hooks/useThemeColor";
+import { useBaseStyles } from "@/hooks/useBaseStyles";
 
+
+const isWeb = Platform.OS === "web";
+
+export type ThemedProps = {
+  lightColor?: string;
+  darkColor?: string;
+};
 export const LoginForm = ({
   onSubmit,
-}: {
+  lightColor,
+  darkColor,
+}: ThemedProps & {
   onSubmit: (id: string, password: string) => void;
 }) => {
+  const baseStyles = useBaseStyles();
+
+  const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'background');
+
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [isDisabled, setIsDisabled] = useState(true);
@@ -37,29 +51,29 @@ export const LoginForm = ({
   }, [id, password]);
 
   return (
-    <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-      <SafeAreaView>
-        <View style={styles.root}>
-          <View style={styles.formControl}>
-            <Text>id</Text>
+    <TouchableWithoutFeedback onPress={isWeb ? undefined : Keyboard.dismiss}>
+      <ScrollView style={baseStyles.scrollView}>
+        <ThemedView style={styles.root}>
+          <ThemedView style={styles.formControl}>
+            <ThemedText>id</ThemedText>
             <TextInput
-              style={BaseStyles.textInput}
+              style={baseStyles.textInput}
               onChange={(e) => setId(e.nativeEvent.text)}
               value={id}
             />
-          </View>
-          <View style={styles.formControl}>
-            <Text>Password</Text>
+          </ThemedView>
+          <ThemedView style={styles.formControl}>
+            <ThemedText>Password</ThemedText>
             <TextInput
-              style={BaseStyles.textInput}
+              style={baseStyles.textInput}
               secureTextEntry
               onChange={(e) => setPassword(e.nativeEvent.text)}
               value={password}
             />
-          </View>
+          </ThemedView>
           <Button title="Submit" onPress={handleSubmit} disabled={isDisabled} />
-        </View>
-      </SafeAreaView>
+        </ThemedView>
+      </ScrollView>
     </TouchableWithoutFeedback>
   );
 };

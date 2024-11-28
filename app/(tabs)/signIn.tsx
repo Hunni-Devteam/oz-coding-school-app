@@ -1,6 +1,5 @@
 import { Alert, Button, View } from "react-native";
 import LoginForm from "@/components/auth/LoginForm";
-import FriendLogo from "@/assets/images/friend-svgrepo-com.svg";
 
 interface AppProps {}
 interface AppState {
@@ -15,7 +14,6 @@ const SignInPage = () => {
   return (
     <View>
       <LoginForm onSubmit={onSubmitUsername} />
-      <FriendLogo width={200} height={200} />
     </View>
   );
 };
