@@ -16,21 +16,12 @@ import { useBaseStyles } from "@/hooks/useBaseStyles";
 
 const isWeb = Platform.OS === "web";
 
-export type ThemedProps = {
-  lightColor?: string;
-  darkColor?: string;
-};
 export const LoginForm = ({
   onSubmit,
-  lightColor,
-  darkColor,
-}: ThemedProps & {
+}: {
   onSubmit: (id: string, password: string) => void;
 }) => {
   const baseStyles = useBaseStyles();
-
-  const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'background');
-
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [isDisabled, setIsDisabled] = useState(true);
