@@ -7,6 +7,7 @@ import {
   StyleSheet,
   ScrollView,
   Platform,
+  View,
 } from "react-native";
 import { ThemedView } from "../ThemedView";
 import { ThemedText } from "../ThemedText";
@@ -44,16 +45,16 @@ export const LoginForm = ({
   return (
     <TouchableWithoutFeedback onPress={isWeb ? undefined : Keyboard.dismiss}>
       <ScrollView style={baseStyles.scrollView}>
-        <ThemedView style={styles.root}>
-          <ThemedView style={styles.formControl}>
+        <View style={styles.root}>
+          <View style={styles.formControl}>
             <ThemedText>id</ThemedText>
             <TextInput
               style={baseStyles.textInput}
               onChange={(e) => setId(e.nativeEvent.text)}
               value={id}
             />
-          </ThemedView>
-          <ThemedView style={styles.formControl}>
+          </View>
+          <View style={styles.formControl}>
             <ThemedText>Password</ThemedText>
             <TextInput
               style={baseStyles.textInput}
@@ -61,9 +62,9 @@ export const LoginForm = ({
               onChange={(e) => setPassword(e.nativeEvent.text)}
               value={password}
             />
-          </ThemedView>
+          </View>
           <Button title="Submit" onPress={handleSubmit} disabled={isDisabled} />
-        </ThemedView>
+        </View>
       </ScrollView>
     </TouchableWithoutFeedback>
   );

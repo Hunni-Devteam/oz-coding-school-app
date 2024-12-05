@@ -3,9 +3,11 @@ import React from "react";
 import { Ionicons } from "@expo/vector-icons"; // Replace with a matching icon library
 import { Colors } from "@/constants/Colors";
 import { useColorScheme } from "@/hooks/useColorScheme";
+import { useCustomTheme } from "@/hooks/useCustomTheme";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+  const { setTheme} = useCustomTheme();
 
   return (
     <Tabs
@@ -83,6 +85,22 @@ export default function TabLayout() {
           tabBarIcon: ({ color, focused }) => (
             <Ionicons
               name={focused ? "person-circle" : "person-circle-outline"}
+              color={color}
+              size={24}
+            />
+          ),
+        }}
+      />
+
+      {/* Profile Tab */}
+      <Tabs.Screen
+        name="switchTheme"
+        options={{
+          
+          tabBarIcon: ({ color, focused }) => (
+            <Ionicons
+            onPress={() =>  setTheme(colorScheme === "dark" ? "light" : "dark")}
+              name={focused ? "moon" : "moon-outline"}
               color={color}
               size={24}
             />
