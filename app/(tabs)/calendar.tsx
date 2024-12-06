@@ -1,14 +1,14 @@
 import React from "react";
 import {
   StyleSheet,
-  Text,
-  View,
   SafeAreaView,
   ScrollView,
   StatusBar,
-  useColorScheme,
 } from "react-native";
 import { Calendar } from "react-native-calendars";
+import { ThemedView } from "@/components/ThemedView";
+import { ThemedText } from "@/components/ThemedText";
+import { useCustomTheme } from "@/hooks/useCustomTheme";
 
 const months = [
   { title: "November 2024", date: "2024-11-01" },
@@ -17,39 +17,23 @@ const months = [
 ];
 
 export const CalendarPage = () => {
-  const colorScheme = useColorScheme();
-  const isDarkMode = colorScheme === "dark";
+  const { theme } = useCustomTheme();
+  const isDarkMode = theme === "dark";
 
   return (
-    <SafeAreaView
-      style={[
-        styles.container,
-        { backgroundColor: isDarkMode ? "#121212" : "#fff" },
-      ]}
-    >
+    <SafeAreaView style={styles.container}>
       <StatusBar barStyle={isDarkMode ? "light-content" : "dark-content"} />
 
       {/* Page Header */}
-      <View style={styles.header}>
-        <Text
-          style={[styles.headerText, { color: isDarkMode ? "#fff" : "#000" }]}
-        >
-          Calendar
-        </Text>
-      </View>
+      <ThemedView style={styles.header}>
+        <ThemedText style={styles.headerText}>Calendar</ThemedText>
+      </ThemedView>
 
       {/* Scrollable View with Multiple Calendars */}
       <ScrollView style={styles.scrollContainer}>
         {months.map((month, index) => (
-          <View key={index} style={styles.calendarContainer}>
-            <Text
-              style={[
-                styles.monthTitle,
-                { color: isDarkMode ? "#fff" : "#000" },
-              ]}
-            >
-              {month.title}
-            </Text>
+          <ThemedView key={index} style={styles.calendarContainer}>
+            <ThemedText style={styles.monthTitle}>{month.title}</ThemedText>
             <Calendar
               current={month.date}
               theme={{
@@ -72,7 +56,7 @@ export const CalendarPage = () => {
               }}
               style={styles.calendar}
             />
-          </View>
+          </ThemedView>
         ))}
       </ScrollView>
     </SafeAreaView>
@@ -87,7 +71,6 @@ const styles = StyleSheet.create({
     height: 60,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#1F1F1F",
   },
   headerText: {
     fontSize: 20,

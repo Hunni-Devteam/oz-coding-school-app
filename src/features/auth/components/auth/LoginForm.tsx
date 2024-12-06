@@ -7,13 +7,12 @@ import {
   StyleSheet,
   ScrollView,
   Platform,
-  View,
 } from "react-native";
 import { ThemedView } from "../ThemedView";
 import { ThemedText } from "../ThemedText";
-import { useThemeColor } from "@/hooks/useThemeColor";
 import { useBaseStyles } from "@/hooks/useBaseStyles";
-
+import { useCustomTheme } from "@/hooks/useCustomTheme";
+import { Colors } from "@/constants/Colors";
 
 const isWeb = Platform.OS === "web";
 
@@ -22,17 +21,12 @@ export const LoginForm = ({
 }: {
   onSubmit: (id: string, password: string) => void;
 }) => {
-  const baseStyles = useBaseStyles();
   const [id, setId] = useState("");
   const [password, setPassword] = useState("");
   const [isDisabled, setIsDisabled] = useState(true);
-
-  function handleSubmit() {
-    onSubmit(id, password);
-    setId("");
-    setPassword("");
-    setIsDisabled(true);
-  }
+  const baseStyles = useBaseStyles();
+  const { theme } = useCustomTheme();
+  const isDark = theme === "dark";
 
   useEffect(() => {
     if (password !== "" && id !== "") {
@@ -42,29 +36,49 @@ export const LoginForm = ({
     }
   }, [id, password]);
 
+  const handleSubmit = () => {
+    onSubmit(id, password);
+    setId("");
+    setPassword("");
+    setIsDisabled(true);
+  };
+
   return (
     <TouchableWithoutFeedback onPress={isWeb ? undefined : Keyboard.dismiss}>
       <ScrollView style={baseStyles.scrollView}>
-        <View style={styles.root}>
-          <View style={styles.formControl}>
+        <ThemedView style={styles.root}>
+          <ThemedView style={styles.formControl}>
             <ThemedText>id</ThemedText>
             <TextInput
-              style={baseStyles.textInput}
-              onChange={(e) => setId(e.nativeEvent.text)}
+              style={[
+                baseStyles.textInput,
+                { color: isDark ? Colors.dark.text : Colors.light.text }
+              ]}
               value={id}
+              onChangeText={setId}
+              placeholder="Enter your id"
+              placeholderTextColor={isDark ? "#666" : "#999"}
+              autoCapitalize="none"
             />
-          </View>
-          <View style={styles.formControl}>
+          </ThemedView>
+
+          <ThemedView style={styles.formControl}>
             <ThemedText>Password</ThemedText>
             <TextInput
-              style={baseStyles.textInput}
-              secureTextEntry
-              onChange={(e) => setPassword(e.nativeEvent.text)}
+              style={[
+                baseStyles.textInput,
+                { color: isDark ? Colors.dark.text : Colors.light.text }
+              ]}
               value={password}
+              onChangeText={setPassword}
+              placeholder="Enter your password"
+              placeholderTextColor={isDark ? "#666" : "#999"}
+              secureTextEntry
             />
-          </View>
+          </ThemedView>
+
           <Button title="Submit" onPress={handleSubmit} disabled={isDisabled} />
-        </View>
+        </ThemedView>
       </ScrollView>
     </TouchableWithoutFeedback>
   );
