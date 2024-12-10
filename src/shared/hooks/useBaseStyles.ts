@@ -1,4 +1,4 @@
-import BaseStyles from "@/styles/base";
+import BaseStyles from "@/src/styles/base";
 import { StyleSheet, TextStyle, ViewStyle } from "react-native";
 import { useCustomTheme } from "./useCustomTheme";
 
@@ -12,4 +12,4 @@ export const useBaseStyles = () => {
   };
 
   return composedStyles;
-}
+};

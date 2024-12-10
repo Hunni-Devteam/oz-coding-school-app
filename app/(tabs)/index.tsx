@@ -1,74 +1,176 @@
-import { Image, StyleSheet, Platform } from "react-native";
+import React from "react";
+import {
+  View,
+  StyleSheet,
+  ScrollView,
+  TouchableOpacity,
+  Dimensions,
+  Text,
+  ViewStyle,
+  TextStyle,
+} from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 
-import { HelloWave } from "@/components/HelloWave";
-import ParallaxScrollView from "@/components/ParallaxScrollView";
-import { ThemedText } from "@/components/ThemedText";
-import { ThemedView } from "@/components/ThemedView";
+import { ThemedView } from "@shared/components/ui/ThemedView";
+import { ThemedText } from "@shared/components/ui/ThemedText";
+import { useThemeColor } from "@shared/hooks";
+import { Colors } from "@shared/constants/Colors";
+
+const { width } = Dimensions.get("window");
+
+const DashboardCard = ({
+  icon,
+  title,
+  subtitle,
+  onPress,
+  color,
+}: {
+  icon: string;
+  title: string;
+  subtitle: string;
+  onPress: () => void;
+  color: string;
+}) => {
+  const textColor = useThemeColor({}, "text");
+  const backgroundColor = useThemeColor({}, "background");
+
+  return (
+    <TouchableOpacity
+      onPress={onPress}
+      style={[
+        styles.dashboardCard,
+        {
+          backgroundColor: backgroundColor,
+        },
+      ]}
+    >
+      <View style={styles.cardIconContainer}>
+        <Ionicons name={icon} size={32} color={textColor} />
+      </View>
+      <View style={styles.cardTextContainer}>
+        <Text style={[styles.cardTitle, { color: textColor }]}>{title}</Text>
+        <Text style={[styles.cardSubtitle, { color: textColor }]}>
+          {subtitle}
+        </Text>
+      </View>
+    </TouchableOpacity>
+  );
+};
 
 export default function HomeScreen() {
+  const router = useRouter();
+  const textColor = useThemeColor({}, "text");
+
+  const dashboardItems = [
+    {
+      icon: "calendar-outline",
+      title: "Calendar",
+      subtitle: "View your schedule",
+      color: "#4A90E2",
+      onPress: () => router.push("/(tabs)/calendar"),
+    },
+    {
+      icon: "chatbubble-outline",
+      title: "Messages",
+      subtitle: "Check your inbox",
+      color: "#50C878",
+      onPress: () => router.push("/(tabs)/messages"),
+    },
+    {
+      icon: "people-outline",
+      title: "Friends",
+      subtitle: "Connect with peers",
+      color: "#FF6B6B",
+      onPress: () => router.push("/(tabs)/friends"),
+    },
+    {
+      icon: "person-outline",
+      title: "Profile",
+      subtitle: "Manage your account",
+      color: "#9C27B0",
+      onPress: () => router.push("/(tabs)/profile"),
+    },
+  ];
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: "#A1CEDC", dark: "#1D3D47" }}
-      headerImage={
-        <Image
-          source={require("@/assets/images/partial-react-logo.png")}
-          style={styles.reactLogo}
-        />
-      }
-    >
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit{" "}
-          <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText>{" "}
-          to see changes. Press{" "}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({ ios: "cmd + d", android: "cmd + m" })}
-          </ThemedText>{" "}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-        <ThemedText>
-          Tap the Explore tab to learn more about what's included in this
-          starter app.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          When you're ready, run{" "}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText>{" "}
-          to get a fresh <ThemedText type="defaultSemiBold">app</ThemedText>{" "}
-          directory. This will move the current{" "}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{" "}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
-      </ThemedView>
-    </ParallaxScrollView>
+    <ThemedView style={styles.container}>
+      <ScrollView
+        contentContainerStyle={styles.scrollContainer}
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={styles.headerContainer}>
+          <Text style={[styles.welcomeText, { color: textColor }]}>
+            Welcome Back!
+          </Text>
+          <Text style={[styles.subtitleText, { color: textColor }]}>
+            Ready to continue your learning journey?
+          </Text>
+        </View>
+
+        <View style={styles.dashboardContainer}>
+          {dashboardItems.map((item, index) => (
+            <DashboardCard key={index} {...item} />
+          ))}
+        </View>
+      </ScrollView>
+    </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 8,
+  container: {
+    flex: 1,
   },
-  stepContainer: {
-    gap: 8,
+  scrollContainer: {
+    paddingHorizontal: 16,
+    paddingTop: 50,
+  },
+  headerContainer: {
+    marginBottom: 30,
+  },
+  welcomeText: {
+    fontSize: 28,
+    fontWeight: "bold",
     marginBottom: 8,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: "absolute",
+  subtitleText: {
+    fontSize: 16,
+    opacity: 0.7,
+  },
+  dashboardContainer: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "space-between",
+  },
+  dashboardCard: {
+    width: width / 2 - 24,
+    height: 180,
+    borderRadius: 15,
+    padding: 16,
+    marginBottom: 16,
+    justifyContent: "space-between",
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  cardIconContainer: {
+    alignSelf: "flex-start",
+    padding: 10,
+    borderRadius: 10,
+  },
+  cardTextContainer: {
+    alignSelf: "flex-start",
+  },
+  cardTitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    marginBottom: 4,
+  },
+  cardSubtitle: {
+    fontSize: 14,
+    opacity: 0.7,
   },
 });

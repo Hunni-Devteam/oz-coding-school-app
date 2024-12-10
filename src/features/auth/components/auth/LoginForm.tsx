@@ -8,11 +8,9 @@ import {
   ScrollView,
   Platform,
 } from "react-native";
-import { ThemedView } from "../ThemedView";
-import { ThemedText } from "../ThemedText";
-import { useBaseStyles } from "@/hooks/useBaseStyles";
-import { useCustomTheme } from "@/hooks/useCustomTheme";
-import { Colors } from "@/constants/Colors";
+import { ThemedView, ThemedText } from "@shared/components/ui";
+import { useBaseStyles, useCustomTheme } from "@shared/hooks";
+import { Colors } from "@shared/constants/Colors";
 
 const isWeb = Platform.OS === "web";
 

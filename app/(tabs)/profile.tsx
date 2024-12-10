@@ -1,10 +1,31 @@
-import { ThemedText } from "@/components/ThemedText";
-import { ThemedView } from "@/components/ThemedView";
-import { useBaseStyles } from "@/hooks/useBaseStyles";
+import React, { useEffect, useState } from "react";
+import { 
+  SafeAreaView, 
+  View, 
+  Text, 
+  StyleSheet, 
+  ScrollView, 
+  TouchableOpacity,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import React from "react";
-import { SafeAreaView, View, Text, StyleSheet, ScrollView, Dimensions } from "react-native";
-import FriendLogo from "@/assets/images/friend-svgrepo-com.svg";
+import { useCustomTheme } from "@shared/hooks/useCustomTheme";
+import FriendLogo from "@src-assets/images/friend-svgrepo-com.svg";
+
+type ThemeColors = {
+  text: string;
+  background: string;
+};
+
+const Colors: Record<'light' | 'dark', ThemeColors> = {
+  light: {
+    text: '#11181C',
+    background: '#fff',
+  },
+  dark: {
+    text: '#ECEDEE',
+    background: '#151718',
+  }
+};
 
 type User = {
   id: number;
@@ -15,69 +36,143 @@ type User = {
   updateAt: Date;
 };
 
-// Props 타입 정의
-type UserProfileProps = {
-  user: User;
-};
+const ProfileSection = ({ 
+  icon, 
+  title, 
+  value, 
+  textColor 
+}: { 
+  icon: keyof typeof Ionicons.glyphMap, 
+  title: string, 
+  value?: string, 
+  textColor: string 
+}) => (
+  <View style={styles.profileListItem}>
+    <Ionicons name={icon} size={24} color={textColor} />
+    <Text style={[styles.profileText, { color: textColor }]}>
+      {title}{value ? `: ${value}` : ''}
+    </Text>
+  </View>
+);
 
-// UserProfile 컴포넌트를 TabTwoScreen 함수 외부에 정의
-const UserProfile = ({ user }: UserProfileProps) => {
+export default function ProfileScreen() {
+  const { theme } = useCustomTheme();
+  const colors = Colors[theme];
 
-  return (
-      <ThemedView>
-        <FriendLogo width={60} height={60} />
-        <ThemedText>프로필 정보</ThemedText>
-        <ThemedView>
-          <ThemedText>나의정보</ThemedText>
-          <ThemedView style={[styles.profileList]}>
-            <ThemedView style={[styles.profileListItem]}>
-              <Ionicons name="person-outline" size={24} color="black" />
-              <ThemedText>이름: {user.name}</ThemedText>
-            </ThemedView>
-            <ThemedView style={[styles.profileListItem]}>
-              <Ionicons name="mail-outline" size={24} color="black" />
-              <ThemedText>이메일: {user.email}</ThemedText>
-            </ThemedView>
-            <ThemedView style={[styles.profileListItem]}>
-              <Ionicons name="call-outline" size={24} color="black" />
-              <ThemedText>전화번호: {user.phone}</ThemedText>
-            </ThemedView>
-            <ThemedView style={[styles.profileListItem]}>
-              <Ionicons name="log-out-outline" size={24} color="black" />
-              <ThemedText>로그아웃</ThemedText>
-            </ThemedView>
-          </ThemedView>
-        </ThemedView>
-      </ThemedView>
-  );
-};
-
-// TabTwoScreen 컴포넌트
-export default function TabTwoScreen() {
-  const baseStyles = useBaseStyles();
-  const exampleUser = {
+  // 임시 사용자 데이터
+  const mockUser: User = {
     id: 1,
-    name: "강훈",
-    email: "hunni.devteam@gmail.com",
-    phone: "010-1234-1234",
+    name: "홍길동",
+    email: "hong@example.com",
+    phone: "010-1234-5678",
     createdAt: new Date(),
-    updateAt: new Date(),
+    updateAt: new Date()
   };
 
+  // Use a static color for initial render
+  const initialBackgroundColor = theme === 'dark' ? Colors.dark.background : Colors.light.background;
+
   return (
-    <View style={[baseStyles.scrollView, { height: Dimensions.get('window').height }]}>
-        <UserProfile user={exampleUser} />
-    </View>
+    <SafeAreaView style={[styles.safeArea, { backgroundColor: initialBackgroundColor }]}>
+      <ScrollView 
+        contentContainerStyle={styles.scrollContainer}
+        showsVerticalScrollIndicator={false}
+      >
+        <View style={styles.container}>
+          <FriendLogo width={100} height={100} />
+          
+          <Text style={[styles.sectionTitle, { color: colors.text }]}>
+            프로필
+          </Text>
+
+          <View style={styles.profileSection}>
+            <Text style={[styles.sectionSubtitle, { color: colors.text }]}>
+              개인 정보
+            </Text>
+            
+            <ProfileSection 
+              icon="person-outline" 
+              title="이름" 
+              value={mockUser.name} 
+              textColor={colors.text} 
+            />
+            
+            <ProfileSection 
+              icon="mail-outline" 
+              title="이메일" 
+              value={mockUser.email} 
+              textColor={colors.text} 
+            />
+            
+            <ProfileSection 
+              icon="call-outline" 
+              title="전화번호" 
+              value={mockUser.phone} 
+              textColor={colors.text} 
+            />
+
+            <TouchableOpacity 
+              style={styles.logoutButton}
+              onPress={() => {
+                // 로그아웃 로직 추가
+                console.log('로그아웃');
+              }}
+            >
+              <Text style={styles.logoutButtonText}>로그아웃</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </ScrollView>
+    </SafeAreaView>
   );
 }
 
 const styles = StyleSheet.create({
-  profileList: {
-    gap: 8,
+  safeArea: {
+    flex: 1,
+  },
+  scrollContainer: {
+    flexGrow: 1,
+  },
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    padding: 20,
+  },
+  sectionTitle: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginTop: 20,
+    marginBottom: 10,
+  },
+  profileSection: {
+    width: '100%',
+    marginTop: 20,
+  },
+  sectionSubtitle: {
+    fontSize: 18,
+    fontWeight: '600',
+    marginBottom: 15,
   },
   profileListItem: {
-    flexDirection: "row",
-    alignItems: "center",
-    gap: 8,
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginBottom: 15,
+  },
+  profileText: {
+    fontSize: 16,
+    marginLeft: 10,
+  },
+  logoutButton: {
+    backgroundColor: '#FF4B4B',
+    padding: 15,
+    borderRadius: 10,
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  logoutButtonText: {
+    color: '#FFFFFF',
+    fontSize: 16,
+    fontWeight: '600',
   },
 });

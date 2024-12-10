@@ -1,5 +1,6 @@
-import { Alert, Button, View } from "react-native";
-import LoginForm from "@/components/auth/LoginForm";
+import { SafeAreaView, StyleSheet, Alert, Button } from "react-native";
+import LoginForm from "@features/auth/components/auth/LoginForm";
+import { ThemedView } from "@shared/components/ui";
 
 interface AppProps {}
 interface AppState {
@@ -12,9 +13,9 @@ const SignInPage = () => {
   };
 
   return (
-    <View>
+    <ThemedView>
       <LoginForm onSubmit={onSubmitUsername} />
-    </View>
+    </ThemedView>
   );
 };
 

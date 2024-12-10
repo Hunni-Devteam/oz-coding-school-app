@@ -1,4 +1,4 @@
-export * from './useColorScheme';
-export * from './useCustomTheme';
-export * from './useThemeColor';
-export * from './useBaseStyles';
+export { useColorScheme } from './useColorScheme';
+export { useCustomTheme } from './useCustomTheme';
+export { useThemeColor } from './useThemeColor';
+export { useBaseStyles } from './useBaseStyles';
