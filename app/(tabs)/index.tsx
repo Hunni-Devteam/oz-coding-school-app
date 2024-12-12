@@ -19,19 +19,21 @@ import { Colors } from "@shared/constants/Colors";
 
 const { width } = Dimensions.get("window");
 
+interface DashboardCardProps {
+  icon: keyof typeof Ionicons.glyphMap
+  title: string;
+  subtitle: string;
+  onPress: () => void;
+  color: string;
+}
+
 const DashboardCard = ({
   icon,
   title,
   subtitle,
   onPress,
   color,
-}: {
-  icon: string;
-  title: string;
-  subtitle: string;
-  onPress: () => void;
-  color: string;
-}) => {
+}: DashboardCardProps) => {
   const textColor = useThemeColor({}, "text");
   const backgroundColor = useThemeColor({}, "background");
 
@@ -62,7 +64,7 @@ export default function HomeScreen() {
   const router = useRouter();
   const textColor = useThemeColor({}, "text");
 
-  const dashboardItems = [
+  const dashboardItems: DashboardCardProps[] = [
     {
       icon: "calendar-outline",
       title: "Calendar",

@@ -1,8 +1,10 @@
 import React from "react";
-import { View } from "react-native";
+import { Text, View } from "react-native";
 
 const friends = () => {
-  return <View>Friends Page</View>;
+  return <View>
+    <Text>Friends Page</Text>
+  </View>;
 };
 
 export default friends;

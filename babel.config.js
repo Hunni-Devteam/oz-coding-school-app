@@ -28,7 +28,6 @@ module.exports = function (api) {
           ]
         }
       ],
-      'expo-router/babel',
       '@svgr/babel-plugin-transform-react-native-svg'
     ]
   };

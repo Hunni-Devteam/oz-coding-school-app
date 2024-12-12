@@ -25,9 +25,5 @@ export function ThemeToggle() {
 const styles = StyleSheet.create({
   container: {
     padding: 8,
-    position: "absolute",
-    top: 8,
-    right: 8,
-    zIndex: 1000,
   },
 });
