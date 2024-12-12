@@ -27,7 +27,7 @@ export default function TabLayout() {
         <Pressable style={{
           padding: 8
         }}
-        onPress={() => router.push('/signIn')}>
+        onPress={() => router.push('/auth/signIn')}>
           <Ionicons name="log-in-outline" size={24} color={Colors[colorScheme ?? "dark"].tint} />
         </Pressable>
         <ThemeToggle />

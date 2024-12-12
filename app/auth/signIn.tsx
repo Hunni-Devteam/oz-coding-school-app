@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { View, TextInput, Button, Text, StyleSheet, Image, TouchableOpacity } from 'react-native';
 import * as yup from 'yup';
 import { Formik } from 'formik';
-import { useNavigation } from '@react-navigation/native';
+import { useRouter } from 'expo-router';
 
 // 이메일 유효성 검사와 로그인 검증을 위한 validation schema
 const validationSchema = yup.object().shape({
@@ -12,7 +12,7 @@ const validationSchema = yup.object().shape({
 
 const LoginPage: React.FC = () => {
   const [loginError, setLoginError] = useState<string>('');
-  const navigation = useNavigation();
+  const router = useRouter();
 
   // 로그인 처리 함수
   const handleLogin = (values: { email: string; password: string }) => {
@@ -21,7 +21,7 @@ const LoginPage: React.FC = () => {
     // 로그인 API 요청 (여기서는 더미 데이터 사용)
     if (email === 'test@example.com' && password === 'password123') {
       // 로그인 성공 시 메인 페이지로 이동
-      navigation.navigate('MainPage');
+      router.back()
     } else {
       // 로그인 실패 시 에러 메시지 설정
       setLoginError('회원정보가 맞지 않습니다.');
@@ -31,7 +31,7 @@ const LoginPage: React.FC = () => {
   return (
     <View style={styles.container}>
       {/* 로고 이미지 */}
-      <Image source={require('./assets/logo.png')} style={styles.logo} />
+      <Image source={require('@/assets/images/react-logo.png')} style={styles.logo} />
 
       <Formik
         initialValues={{ email: '', password: '' }}
@@ -66,7 +66,7 @@ const LoginPage: React.FC = () => {
             {loginError && <Text style={styles.errorText}>{loginError}</Text>}
 
             {/* 작은 회원가입 버튼 */}
-            <TouchableOpacity onPress={() => navigation.navigate('SignUpPage')}>
+            <TouchableOpacity onPress={() => null}>
               <Text style={styles.signUpText}>회원가입</Text>
             </TouchableOpacity>
           </>
