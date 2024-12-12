@@ -1,13 +1,18 @@
 import { Tabs } from "expo-router";
 import React from "react";
-import { Ionicons } from "@expo/vector-icons"; 
-import { Colors } from "@/constants/Colors";
-import { useColorScheme } from "@/hooks/useColorScheme";
+import { Ionicons } from "@expo/vector-icons";
+import { Colors } from "@shared/constants/Colors";
+import { useColorScheme } from "@shared/hooks";
 import { View } from "react-native";
-import { ThemeToggle } from "@/components/ThemeToggle";
+import { ThemeToggle } from "@shared/components/ui";
 
 export default function TabLayout() {
   const colorScheme = useColorScheme();
+
+  // Use a static color for initial render
+  const initialTabBarStyle = {
+    backgroundColor: colorScheme === "dark" ? "#121212" : "#fff",
+  };
 
   return (
     <View style={{ flex: 1 }}>
@@ -16,10 +21,8 @@ export default function TabLayout() {
         screenOptions={{
           tabBarActiveTintColor: Colors[colorScheme ?? "dark"].tint,
           tabBarInactiveTintColor: "#888",
-          tabBarStyle: {
-            backgroundColor: colorScheme === "dark" ? "#121212" : "#fff",
-            borderTopWidth: 0,
-          },
+          tabBarStyle: initialTabBarStyle, // Static color for initial render
+          borderTopWidth: 0,
           tabBarShowLabel: false,
           headerShown: false,
         }}

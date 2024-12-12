@@ -6,9 +6,11 @@ module.exports = function (api) {
       [
         'module-resolver',
         {
-          root: ['./src'],
+          root: ['./src', './assets', './app'],
           alias: {
-            '@': './src',
+            '@': './',
+            '@assets': './assets',
+            '@src-assets': './src/assets',
             '@shared': './src/shared',
             '@features': './src/features'
           },
@@ -22,9 +24,12 @@ module.exports = function (api) {
             '.jsx',
             '.js',
             '.json',
-          ],
-        },
+            '.svg'
+          ]
+        }
       ],
-    ],
+      'expo-router/babel',
+      '@svgr/babel-plugin-transform-react-native-svg'
+    ]
   };
 };

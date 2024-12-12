@@ -1,8 +1,8 @@
 import React from "react";
 import { TouchableOpacity, StyleSheet } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { useCustomTheme } from "@/hooks/useCustomTheme";
-import { Colors } from "@/constants/Colors";
+import { useCustomTheme } from "@shared/hooks";
+import { Colors } from "@shared/constants/Colors";
 
 export function ThemeToggle() {
   const { theme, setTheme } = useCustomTheme();

@@ -6,9 +6,8 @@ import {
   StatusBar,
 } from "react-native";
 import { Calendar } from "react-native-calendars";
-import { ThemedView } from "@/components/ThemedView";
-import { ThemedText } from "@/components/ThemedText";
-import { useCustomTheme } from "@/hooks/useCustomTheme";
+import { ThemedView, ThemedText } from "@shared/components/ui";
+import { useCustomTheme } from "@shared/hooks";
 
 const months = [
   { title: "November 2024", date: "2024-11-01" },
