@@ -17,21 +17,6 @@ export default function TabLayout() {
 
   return (
     <View style={{ flex: 1 }}>
-      <SafeAreaView style={{
-        backgroundColor: Colors[colorScheme ?? "dark"].background,
-        height: 96,
-        alignItems:'center',
-        justifyContent: 'space-between',
-        flexDirection: 'row'
-      }}>
-        <Pressable style={{
-          padding: 8
-        }}
-        onPress={() => router.push('/auth/signIn')}>
-          <Ionicons name="log-in-outline" size={24} color={Colors[colorScheme ?? "dark"].tint} />
-        </Pressable>
-        <ThemeToggle />
-      </SafeAreaView>
       <Tabs
         screenOptions={{
           tabBarActiveTintColor: Colors[colorScheme ?? "dark"].tint,
@@ -39,7 +24,26 @@ export default function TabLayout() {
           tabBarStyle: initialTabBarStyle, // Static color for initial render
           // borderTopWidth: 0,
           tabBarShowLabel: false,
-          headerShown: false,
+          headerShown: true, // 헤더를 표시하도록 설정
+          headerStyle: {
+            backgroundColor: Colors[colorScheme ?? "dark"].background, // 헤더 배경색
+          },
+          headerTitleStyle: {
+            color: Colors[colorScheme ?? "dark"].text, // 헤더 텍스트 색상
+            fontWeight: "bold",
+          },
+          headerRight: () => (
+            
+            <ThemeToggle />
+          ),
+          headerLeft: () => (
+            <Pressable style={{
+              padding: 8
+            }}
+            onPress={() => router.push('/auth/signIn')}>
+              <Ionicons name="log-in-outline" size={24} color={Colors[colorScheme ?? "dark"].tint} />
+            </Pressable>
+          ),
         }}
       >
         {/* Calendar Tab */}
@@ -53,12 +57,13 @@ export default function TabLayout() {
                 size={24}
               />
             ),
+            headerTitle: "Calendar",
           }}
         />
 
         {/* Friends Tab */}
         <Tabs.Screen
-          name="friends"
+          name="studyGroups"
           options={{
             tabBarIcon: ({ color, focused }) => (
               <Ionicons
@@ -67,6 +72,7 @@ export default function TabLayout() {
                 size={24}
               />
             ),
+            headerTitle: "studyGroups",
           }}
         />
 
@@ -81,6 +87,7 @@ export default function TabLayout() {
                 size={24}
               />
             ),
+            headerTitle: "Main",
           }}
         />
 
@@ -95,6 +102,7 @@ export default function TabLayout() {
                 size={24}
               />
             ),
+            headerTitle: "Notice",
           }}
         />
 
@@ -109,6 +117,7 @@ export default function TabLayout() {
                 size={24}
               />
             ),
+            headerTitle: "Profile",
           }}
         />
       </Tabs>
